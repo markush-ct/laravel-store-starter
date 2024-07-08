@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\MainStoreController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Resources\CategoriesListResource;
+use App\Http\Resources\ProductsListResource;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -12,7 +17,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -23,5 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/store', [MainStoreController::class, 'index'])->name('store.index');
+Route::get('/store/category/{category:slug}', [MainStoreController::class, 'showCategoryProducts'])->name('store.show.category');
 
 require __DIR__.'/auth.php';
