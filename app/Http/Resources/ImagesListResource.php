@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductsListResource extends JsonResource
+class ImagesListResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,8 @@ class ProductsListResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'slug' => $this->slug,
-            'lowest_variation_price' => $this->variations->min('price'),
-            'cover_image' => $this->images->where('order', $this->images->min('order'))->first()->path,
+            'url' => $this->path,
+            'position' => $this->order,
         ];
     }
 }

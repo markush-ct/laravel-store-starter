@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CategoriesListResource;
+use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductsListResource;
 use App\Models\Category;
 use App\Models\Product;
@@ -69,5 +70,10 @@ class MainStoreController extends Controller
                 ],
             ],
         ]);
+    }
+
+    public function showProduct(Product $product)
+    {
+        return new ProductResource($product->load('images', 'variations', 'reviews', 'tags'));
     }
 }

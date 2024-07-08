@@ -2,10 +2,6 @@
 
 use App\Http\Controllers\MainStoreController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Resources\CategoriesListResource;
-use App\Http\Resources\ProductsListResource;
-use App\Models\Category;
-use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,5 +27,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/store', [MainStoreController::class, 'index'])->name('store.index');
 Route::get('/store/category/{category:slug}', [MainStoreController::class, 'showCategoryProducts'])->name('store.show.category');
+Route::get('/store/product/{product:slug}', [MainStoreController::class, 'showProduct'])->name('store.show.product');
 
 require __DIR__.'/auth.php';

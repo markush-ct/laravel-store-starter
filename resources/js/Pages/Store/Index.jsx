@@ -88,14 +88,30 @@ const Index = ({ products, categories, breadcrumbs }) => {
                                 key={product.id}
                                 className="flex flex-col gap-4"
                             >
-                                <img
-                                    src={product.cover_image}
-                                    alt="Product cover image"
-                                    className="w-full aspect-square"
-                                ></img>
+                                <div className="hover:opacity-50 transition-opacity ease-in-out duration-300">
+                                    <Link
+                                        href={route(
+                                            "store.show.product",
+                                            product.slug
+                                        )}
+                                    >
+                                        <img
+                                            src={product.cover_image}
+                                            alt="Product cover image"
+                                            className="w-full aspect-square"
+                                        ></img>
+                                    </Link>
+                                </div>
                                 <div className="flex flex-col lg:flex-row items-start gap-4">
-                                    <div className="text-[20px]">
-                                        {product.name}
+                                    <div className="text-[20px] hover:font-medium">
+                                        <Link
+                                            href={route(
+                                                "store.show.product",
+                                                product.slug
+                                            )}
+                                        >
+                                            {product.name}
+                                        </Link>
                                     </div>
                                     <div className="text-[32px] font-bold -order-1 lg:order-1">
                                         {product.lowest_variation_price}
