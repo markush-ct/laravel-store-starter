@@ -24,23 +24,23 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        // Jersey category
-        $category = Category::create(['name' => 'Jersey']);
-
         // Generate tags
         $tags = Tag::factory()->count(3)->create();
 
-        // Generate dummy products
-        Product::factory(60)
-            ->for($category)
-            ->hasVariations(3)
-            ->hasImages(10)
-            ->hasAttached($tags)
+        // Generate dummy products in different categories
+        Category::factory(8)
             ->has(
-                Review::factory()
-                    ->count(3)
-                    ->for($user)
+                Product::factory(10)
+                    ->hasVariations(3)
+                    ->hasImages(5)
+                    ->hasAttached($tags)
+                    ->has(
+                        Review::factory()
+                            ->count(3)
+                            ->for($user)
+                    )
             )
             ->create();
+
     }
 }

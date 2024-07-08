@@ -33,13 +33,12 @@ class MainStoreController extends Controller
                     'route' => 'store.index',
                     'separator' => false,
                 ],
-            ]
+            ],
         ]);
     }
 
     public function showCategoryProducts(Category $category)
     {
-        $category = $category->first();
         return Inertia::render(('Store/Index'), [
             'products' => ProductsListResource::collection(
                 $category->products()
@@ -68,7 +67,7 @@ class MainStoreController extends Controller
                     'route' => 'store.show.category',
                     'separator' => false,
                 ],
-            ]
+            ],
         ]);
     }
 }
