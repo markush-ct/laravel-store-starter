@@ -9,8 +9,8 @@ const Index = ({ products, categories, breadcrumbs }) => {
     return (
         <MainLayout>
             <div className="border-b flex justify-center">
-                <Container className="flex flex-col lg:flex-row justify-between gap-5">
-                    <ul className="flex justify-center lg:items-center gap-10 uppercase font-light">
+                <Container className="flex flex-col lg:flex-row justify-between lg:items-start gap-5">
+                    <ul className="flex flex-wrap justify-center lg:justify-start lg:items-center gap-10 uppercase font-light">
                         <li>
                             <Link
                                 href={route("store.index")}
