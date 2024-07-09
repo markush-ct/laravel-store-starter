@@ -1,6 +1,7 @@
 import Container from "@/Components/Container";
 import React from "react";
 import { BsCart2, BsPerson } from "react-icons/bs";
+import { VscThreeBars } from "react-icons/vsc";
 
 const Main = ({ children }) => {
     return (
@@ -45,9 +46,45 @@ const Main = ({ children }) => {
                             <li>
                                 <div className="flex items-center gap-2 opacity-60 hover:opacity-100 hover:font-bold">
                                     <BsPerson className="size-8" />
-                                    <span className="hidden sm:block">
+                                    <span className="hidden md:block">
                                         Sign In
                                     </span>
+                                </div>
+                            </li>
+                            <li className="block lg:hidden">
+                                <div className="drawer">
+                                    <input id="drawer-menu" type="checkbox" className="drawer-toggle" />
+                                    <div className="drawer-content">
+                                        {/* Page content here */}
+                                        <label htmlFor="drawer-menu">
+                                            <VscThreeBars className="size-8 opacity-60 hover:opacity-100 hover:font-bold" />
+                                        </label>
+                                    </div>
+                                    <div className="drawer-side">
+                                        <label htmlFor="drawer-menu" aria-label="close sidebar" className="drawer-overlay"></label>
+                                        <ul className="menu bg-white text-base-content min-h-full w-2/3 p-4">
+                                            <li>
+                                                <a href="#" className="hover:font-bold">
+                                                    Store
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" className="hover:font-bold">
+                                                    Portfolio
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" className="hover:font-bold">
+                                                    About Us
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" className="hover:font-bold">
+                                                    Contact Us
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
