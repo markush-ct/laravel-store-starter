@@ -19,7 +19,7 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'long_description' => $this->long_description,
             'images' => ImagesListResource::collection($this->images->sortBy('order')),
-            'variations' => VariationsListResource::collection($this->variations),
+            'variations' => VariationsListResource::collection($this->variations->sortBy('price')),
             'reviews' => ReviewsListResource::collection($this->reviews),
             'tags' => TagsListResource::collection($this->tags),
         ];

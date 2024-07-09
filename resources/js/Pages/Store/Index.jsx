@@ -3,6 +3,7 @@ import MainLayout from "@/Layouts/MainLayout";
 import Container from "@/Components/Container";
 import { Link } from "@inertiajs/react";
 import { BsSearch } from "react-icons/bs";
+import Breadcrumbs from "@/Components/Store/Breadcrumbs";
 
 const Index = ({ products, categories, breadcrumbs }) => {
     console.log(products, categories);
@@ -57,27 +58,7 @@ const Index = ({ products, categories, breadcrumbs }) => {
             </div>
 
             <div className="flex justify-center">
-                <Container className="flex gap-2 py-10 uppercase font-light">
-                    <span>You are here:</span>
-                    {breadcrumbs &&
-                        breadcrumbs.map((breadcrumb) => (
-                            <>
-                                <span>
-                                    <Link
-                                        href={breadcrumb.url}
-                                        className={
-                                            route().current(breadcrumb.route)
-                                                ? "font-bold"
-                                                : "font-light"
-                                        }
-                                    >
-                                        {breadcrumb.label}
-                                    </Link>
-                                </span>
-                                {breadcrumb.separator && <span>/</span>}
-                            </>
-                        ))}
-                </Container>
+                <Breadcrumbs data={breadcrumbs} />
             </div>
 
             <div className="flex justify-center">

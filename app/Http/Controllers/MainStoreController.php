@@ -74,6 +74,39 @@ class MainStoreController extends Controller
 
     public function showProduct(Product $product)
     {
-        return new ProductResource($product->load('images', 'variations', 'reviews', 'tags'));
+        return Inertia::render(('Store/Product'), [
+            'product' => new ProductResource(
+                $product->load('images', 'variations', 'reviews', 'tags')
+            ),
+            'categories' => CategoriesListResource::collection(
+                Category::all()
+            ),
+            'breadcrumbs' => [
+                [
+                    'label' => 'Home',
+                    'url' => '/',
+                    'route' => 'home',
+                    'separator' => true,
+                ],
+                [
+                    'label' => 'Store',
+                    'url' => route('store.index'),
+                    'route' => 'store.index',
+                    'separator' => true,
+                ],
+                [
+                    'label' => $product->category->name,
+                    'url' => route('store.show.category', $product->category),
+                    'route' => 'store.show.category',
+                    'separator' => true,
+                ],
+                [
+                    'label' => $product->name,
+                    'url' => route('store.show.product', $product),
+                    'route' => 'store.show.product',
+                    'separator' => false,
+                ],
+            ],
+        ]);
     }
 }
