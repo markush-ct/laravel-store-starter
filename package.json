@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "clsx": "^2.1.1",
+        "embla-carousel-react": "^8.1.6",
         "react-icons": "^5.2.1",
         "tailwind-merge": "^2.3.0"
     }
