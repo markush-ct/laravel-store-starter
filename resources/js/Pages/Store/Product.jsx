@@ -3,14 +3,18 @@ import Breadcrumbs from "@/Components/Store/Breadcrumbs";
 import Comments from "@/Components/Store/Comments";
 import MainLayout from "@/Layouts/MainLayout";
 import { Link } from "@inertiajs/react";
-import React from "react";
+import React, { useState } from "react";
 import EmblaCarousel from "@/Components/Store/EmblaCarousel";
 import SearchBox from "@/Components/Store/SearchBox";
+import VariationItem from "@/Components/Store/VariationItem";
 
 const Product = ({ product, categories, breadcrumbs }) => {
     const OPTIONS = {};
     const SLIDE_COUNT = product.data.images.length;
     const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
+    const firstProductVariationPrice = product.data.variations[0].price
+
+    const [totalPrice, setTotalPrice] = useState(firstProductVariationPrice)
 
     return (
         <MainLayout>
@@ -52,7 +56,7 @@ const Product = ({ product, categories, breadcrumbs }) => {
                         ))}
                     </ul>
 
-                    <SearchBox filters='' />
+                    <SearchBox filters="" />
                 </Container>
             </div>
 
@@ -66,38 +70,29 @@ const Product = ({ product, categories, breadcrumbs }) => {
 
                     <div className="grid grid-cols-12 gap-10 py-10">
                         <div className="col-span-12 md:col-span-7 flex justify-center md:justify-start">
-                            <EmblaCarousel slides={SLIDES} images={product.data.images} options={OPTIONS} />
+                            <EmblaCarousel
+                                slides={SLIDES}
+                                images={product.data.images}
+                                options={OPTIONS}
+                            />
                         </div>
                         <div className="col-span-12 md:col-span-5">
-                            {product.data.variations.map((variation) => (
-                                <div
-                                    className="text-xl flex justify-between items-center gap-5"
-                                    key={variation.id}
-                                >
-                                    <div className="flex gap-8 items-center py-5">
-                                        <input
-                                            type="radio"
-                                            id={variation.id}
-                                            name="variation-price"
-                                            value={variation.id}
-                                            className="size-7 rounded-none focus:ring-0 focus:ring-offset-0 text-primary"
-                                        />
-                                        <label
-                                            htmlFor={variation.id}
-                                            className="cursor-pointer"
-                                        >
-                                            {variation.name}
-                                        </label>
-                                    </div>
-                                    <div>{variation.price} PHP</div>
-                                </div>
+                            {product.data.variations.map((variation, index) => (
+                                <VariationItem
+                                    title={variation.name}
+                                    price={variation.price}
+                                    id={variation.id}
+                                    name="variation-id"
+                                    setTotalPrice={setTotalPrice}
+                                    index={index}
+                                />
                             ))}
 
                             <hr className="my-5" />
 
                             <div className="flex justify-between text-2xl font-bold">
                                 <span>Total:</span>
-                                <span>500 PHP</span>
+                                <span>{totalPrice} PHP</span>
                             </div>
 
                             <div className="py-10 text-right">
@@ -145,7 +140,10 @@ const Product = ({ product, categories, breadcrumbs }) => {
 
                         <div className="flex gap-3">
                             {product.data.tags.map((tag) => (
-                                <Link href={route('store.show.tag', tag.slug)} className="hover:font-bold">
+                                <Link
+                                    href={route("store.show.tag", tag.slug)}
+                                    className="hover:font-bold"
+                                >
                                     {tag.name}
                                 </Link>
                             ))}
