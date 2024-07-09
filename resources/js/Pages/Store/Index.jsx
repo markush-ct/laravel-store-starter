@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import MainLayout from "@/Layouts/MainLayout";
 import Container from "@/Components/Container";
-import { Link } from "@inertiajs/react";
-import { BsSearch } from "react-icons/bs";
+import { Link, router } from "@inertiajs/react";
 import Breadcrumbs from "@/Components/Store/Breadcrumbs";
+import SearchBox from "@/Components/Store/SearchBox";
 
-const Index = ({ products, categories, breadcrumbs }) => {
-    console.log(products, categories);
+const Index = ({ products, categories, breadcrumbs, filters }) => {
     return (
         <MainLayout>
             <div className="border-b flex justify-center">
@@ -46,14 +45,8 @@ const Index = ({ products, categories, breadcrumbs }) => {
                             </li>
                         ))}
                     </ul>
-                    <label className="flex items-center relative">
-                        <input
-                            type="text"
-                            className="grow border border-primary/10 focus:border-primary transition ease-in-out focus:ring-0 py-3 px-4 placeholder:text-primary/60"
-                            placeholder="Search..."
-                        />
-                        <BsSearch className="cursor-pointer absolute right-[16px] top-[50%] -translate-y-1/2" />
-                    </label>
+
+                    <SearchBox filters={filters} />
                 </Container>
             </div>
 
@@ -117,6 +110,7 @@ const Index = ({ products, categories, breadcrumbs }) => {
                             href={products.links.prev}
                             className="join-item btn btn-outline rounded-none"
                             preserveScroll
+                            preserveState
                         >
                             &laquo; Previous
                         </Link>
@@ -124,6 +118,7 @@ const Index = ({ products, categories, breadcrumbs }) => {
                             href={products.links.next}
                             className="join-item btn btn-outline rounded-none"
                             preserveScroll
+                            preserveState
                         >
                             Next &raquo;
                         </Link>

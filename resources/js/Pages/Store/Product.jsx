@@ -4,11 +4,10 @@ import Comments from "@/Components/Store/Comments";
 import MainLayout from "@/Layouts/MainLayout";
 import { Link } from "@inertiajs/react";
 import React from "react";
-import { BsSearch } from "react-icons/bs";
 import EmblaCarousel from "@/Components/Store/EmblaCarousel";
+import SearchBox from "@/Components/Store/SearchBox";
 
 const Product = ({ product, categories, breadcrumbs }) => {
-    console.log(product);
     const OPTIONS = {};
     const SLIDE_COUNT = product.data.images.length;
     const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
@@ -52,14 +51,8 @@ const Product = ({ product, categories, breadcrumbs }) => {
                             </li>
                         ))}
                     </ul>
-                    <label className="flex items-center relative">
-                        <input
-                            type="text"
-                            className="grow border border-primary/10 focus:border-primary transition ease-in-out focus:ring-0 py-3 px-4 placeholder:text-primary/60"
-                            placeholder="Search..."
-                        />
-                        <BsSearch className="cursor-pointer absolute right-[16px] top-[50%] -translate-y-1/2" />
-                    </label>
+
+                    <SearchBox filters='' />
                 </Container>
             </div>
 

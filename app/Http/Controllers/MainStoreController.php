@@ -8,6 +8,7 @@ use App\Http\Resources\ProductsListResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -17,7 +18,13 @@ class MainStoreController extends Controller
     {
         return Inertia::render(('Store/Index'), [
             'products' => ProductsListResource::collection(
-                Product::with('images', 'variations')->paginate(27)
+                Product::query()
+                    ->when(Request::input('search'), function ($query, $search) {
+                        $query->where('name', 'like', "%{$search}%");
+                    })
+                    ->with('images', 'variations')
+                    ->paginate(27)
+                    ->withQueryString()
             ),
             'categories' => CategoriesListResource::collection(
                 Category::all()
@@ -36,6 +43,7 @@ class MainStoreController extends Controller
                     'separator' => false,
                 ],
             ],
+            'filters' => Request::only(['search']),
         ]);
     }
 
