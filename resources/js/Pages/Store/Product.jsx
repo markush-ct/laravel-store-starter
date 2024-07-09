@@ -1,14 +1,19 @@
 import Container from "@/Components/Container";
 import Breadcrumbs from "@/Components/Store/Breadcrumbs";
 import Comments from "@/Components/Store/Comments";
-import Ratings from "@/Components/Store/Ratings";
 import MainLayout from "@/Layouts/MainLayout";
 import { Link } from "@inertiajs/react";
 import React from "react";
 import { BsSearch } from "react-icons/bs";
+import useEmblaCarousel from "embla-carousel-react";
+import EmblaCarousel from "@/Components/Store/EmblaCarousel";
 
 const Product = ({ product, categories, breadcrumbs }) => {
     console.log(product);
+    const OPTIONS = {};
+    const SLIDE_COUNT = product.data.images.length;
+    const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
+
     return (
         <MainLayout>
             <div className="border-b flex justify-center">
@@ -69,11 +74,7 @@ const Product = ({ product, categories, breadcrumbs }) => {
 
                     <div className="grid grid-cols-12 gap-10 py-10">
                         <div className="col-span-12 md:col-span-7 flex justify-center md:justify-start">
-                            <img
-                                src={product.data.images[0].url}
-                                alt="Product image"
-                                className="size-[400px] md:size-[500px]"
-                            />
+                            <EmblaCarousel slides={SLIDES} images={product.data.images} options={OPTIONS} />
                         </div>
                         <div className="col-span-12 md:col-span-5">
                             {product.data.variations.map((variation) => (
