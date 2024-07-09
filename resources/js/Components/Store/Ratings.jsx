@@ -27,7 +27,7 @@ const Ratings = ({ rating, ...props }) => {
             <input
                 {...props}
                 type="radio"
-                className="mask mask-star-2 bg-orange-400 checked:text-orange-500"
+                className="mask mask-star-2 bg-orange-400 checked:text-orange-400"
                 checked={rating >= 4}
                 disabled
             />
