@@ -107,8 +107,8 @@ class MainStoreController extends Controller
                 ],
                 [
                     'label' => $tag->name,
-                    'url' => route('store.show.category', $tag),
-                    'route' => 'store.show.category',
+                    'url' => route('store.show.tag', $tag),
+                    'route' => 'store.show.tag',
                     'separator' => false,
                 ],
             ],
