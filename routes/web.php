@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/store', [MainStoreController::class, 'index'])->name('store.index');
 Route::get('/store/category/{category:slug}', [MainStoreController::class, 'showCategoryProducts'])->name('store.show.category');
+Route::get('/store/tag/{tag:slug}', [MainStoreController::class, 'showTagProducts'])->name('store.show.tag');
 Route::get('/store/product/{product:slug}', [MainStoreController::class, 'showProduct'])->name('store.show.product');
 
 require __DIR__.'/auth.php';

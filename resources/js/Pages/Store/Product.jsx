@@ -5,7 +5,6 @@ import MainLayout from "@/Layouts/MainLayout";
 import { Link } from "@inertiajs/react";
 import React from "react";
 import { BsSearch } from "react-icons/bs";
-import useEmblaCarousel from "embla-carousel-react";
 import EmblaCarousel from "@/Components/Store/EmblaCarousel";
 
 const Product = ({ product, categories, breadcrumbs }) => {
@@ -140,6 +139,22 @@ const Product = ({ product, categories, breadcrumbs }) => {
                                     comment={review.comment}
                                     user={review.user}
                                 />
+                            ))}
+                        </div>
+                    </div>
+                </Container>
+            </div>
+
+            <div className="flex justify-center">
+                <Container>
+                    <div className="flex gap-3 border-b border-t py-5 uppercase">
+                        <span>Tags:</span>
+
+                        <div className="flex gap-3">
+                            {product.data.tags.map((tag) => (
+                                <Link href={route('store.show.tag', tag.slug)} className="hover:font-bold">
+                                    {tag.name}
+                                </Link>
                             ))}
                         </div>
                     </div>

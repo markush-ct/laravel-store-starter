@@ -17,7 +17,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->text(100),
+            'name' => fake()->sentence(3),
             'long_description' => fake()->text(200),
         ];
     }

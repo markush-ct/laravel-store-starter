@@ -80,11 +80,11 @@ const Index = ({ products, categories, breadcrumbs }) => {
                                             src={product.cover_image}
                                             alt="Product cover image"
                                             className="w-full aspect-square"
-                                        ></img>
+                                        />
                                     </Link>
                                 </div>
-                                <div className="flex flex-col lg:flex-row items-start gap-4">
-                                    <div className="text-[20px] hover:font-medium">
+                                <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                                    <div className="text-[20px] hover:font-medium leading-none w-full">
                                         <Link
                                             href={route(
                                                 "store.show.product",
@@ -94,8 +94,11 @@ const Index = ({ products, categories, breadcrumbs }) => {
                                             {product.name}
                                         </Link>
                                     </div>
-                                    <div className="text-[32px] font-bold -order-1 lg:order-1">
-                                        {product.lowest_variation_price}
+                                    <div className="-order-1 md:order-1 flex items-end leading-none">
+                                        <span className="text-[32px] font-bold">
+                                            {product.lowest_variation_price}
+                                        </span>
+
                                         <span className="text-[20px] font-medium ml-2">
                                             PHP
                                         </span>
