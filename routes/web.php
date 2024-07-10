@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\MainStoreController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -29,5 +30,8 @@ Route::get('/store', [MainStoreController::class, 'index'])->name('store.index')
 Route::get('/store/category/{category:slug}', [MainStoreController::class, 'showCategoryProducts'])->name('store.show.category');
 Route::get('/store/tag/{tag:slug}', [MainStoreController::class, 'showTagProducts'])->name('store.show.tag');
 Route::get('/store/product/{product:slug}', [MainStoreController::class, 'showProduct'])->name('store.show.product');
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart', [CartController::class, 'addToCartProduct'])->name('cart.store.product');
 
 require __DIR__.'/auth.php';

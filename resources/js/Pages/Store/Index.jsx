@@ -5,9 +5,9 @@ import { Link, router } from "@inertiajs/react";
 import Breadcrumbs from "@/Components/Store/Breadcrumbs";
 import SearchBox from "@/Components/Store/SearchBox";
 
-const Index = ({ products, categories, breadcrumbs, filters }) => {
+const Index = ({ products, categories, breadcrumbs, totalincart, filters }) => {
     return (
-        <MainLayout>
+        <MainLayout totalincart={totalincart}>
             <div className="border-b flex justify-center">
                 <Container className="flex flex-col lg:flex-row justify-between lg:items-start gap-5">
                     <ul className="flex flex-wrap justify-center lg:justify-start lg:items-center gap-10 uppercase font-light">

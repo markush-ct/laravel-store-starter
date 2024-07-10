@@ -2,22 +2,30 @@ import Container from "@/Components/Container";
 import Breadcrumbs from "@/Components/Store/Breadcrumbs";
 import Comments from "@/Components/Store/Comments";
 import MainLayout from "@/Layouts/MainLayout";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import React, { useState } from "react";
 import EmblaCarousel from "@/Components/Store/EmblaCarousel";
 import SearchBox from "@/Components/Store/SearchBox";
 import VariationItem from "@/Components/Store/VariationItem";
 
-const Product = ({ product, categories, breadcrumbs }) => {
+const Product = ({ product, categories, totalincart, breadcrumbs }) => {
     const OPTIONS = {};
     const SLIDE_COUNT = product.data.images.length;
     const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
+    const firstProductVariationId = product.data.variations[0].id
     const firstProductVariationPrice = product.data.variations[0].price
 
     const [totalPrice, setTotalPrice] = useState(firstProductVariationPrice)
+    const [selectedVariation, setSelectedVariation] = useState(firstProductVariationId)
+
+    const handleAddToCartProduct = () => {
+        router.post(route('cart.store.product'), {
+            variation_id: selectedVariation
+        }, {preserveScroll: true})
+    }
 
     return (
-        <MainLayout>
+        <MainLayout totalincart={totalincart}>
             <div className="border-b flex justify-center">
                 <Container className="flex flex-col lg:flex-row justify-between lg:items-start gap-5">
                     <ul className="flex flex-wrap justify-center lg:justify-start lg:items-center gap-10 uppercase font-light">
@@ -84,6 +92,7 @@ const Product = ({ product, categories, breadcrumbs }) => {
                                     id={variation.id}
                                     name="variation-id"
                                     setTotalPrice={setTotalPrice}
+                                    setSelectedVariation={setSelectedVariation}
                                     index={index}
                                 />
                             ))}
@@ -99,6 +108,7 @@ const Product = ({ product, categories, breadcrumbs }) => {
                                 <button
                                     type="button"
                                     className="uppercase py-5 px-16 bg-green-600 text-white font-medium hover:bg-opacity-80 transition ease-in-out duration-300"
+                                    onClick={handleAddToCartProduct}
                                 >
                                     Add to cart
                                 </button>

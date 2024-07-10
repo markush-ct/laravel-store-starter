@@ -1,9 +1,10 @@
 import Container from "@/Components/Container";
+import { Link } from "@inertiajs/react";
 import React from "react";
 import { BsCart2, BsPerson } from "react-icons/bs";
 import { VscThreeBars } from "react-icons/vsc";
 
-const Main = ({ children }) => {
+const Main = ({ totalincart, children }) => {
     return (
         <div className="min-h-screen text-[16px] text-primary">
             <nav className="flex justify-center h-[110px] border-b sticky top-0 z-50 bg-white">
@@ -13,9 +14,9 @@ const Main = ({ children }) => {
                     <div className="flex gap-10">
                         <ul className="hidden lg:flex items-center gap-10">
                             <li>
-                                <a href="#" className="hover:font-bold">
+                                <Link href={route('store.index')} className="hover:font-bold">
                                     Store
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a href="#" className="hover:font-bold">
@@ -36,12 +37,14 @@ const Main = ({ children }) => {
 
                         <ul className="flex items-center gap-10">
                             <li>
-                                <div className="relative">
-                                    <BsCart2 className="size-8 opacity-60 hover:opacity-100 hover:font-bold" />
-                                    <div className="badge bg-orange-400 badge-md absolute border-none text-white -top-2 left-3">
-                                        0
+                                <Link href={route('cart.index')}>
+                                    <div className="relative">
+                                        <BsCart2 className="size-8 opacity-60 hover:opacity-100 hover:font-bold" />
+                                        <div className="badge bg-orange-400 badge-md absolute border-none text-white -top-2 left-3">
+                                            {totalincart}
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                             </li>
                             <li>
                                 <div className="flex items-center gap-2 opacity-60 hover:opacity-100 hover:font-bold">
