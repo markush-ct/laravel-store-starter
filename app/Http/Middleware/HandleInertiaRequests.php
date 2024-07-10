@@ -41,6 +41,7 @@ class HandleInertiaRequests extends Middleware
                 'location' => $request->url(),
             ],
             'totalincart' => count(Session::get('cart', [])),
+            'flash' => Session::get('message'),
         ];
     }
 }

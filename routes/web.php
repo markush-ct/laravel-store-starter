@@ -33,5 +33,6 @@ Route::get('/store/product/{product:slug}', [MainStoreController::class, 'showPr
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart', [CartController::class, 'addToCartProduct'])->name('cart.store.product');
+Route::post('/cart/remove', [CartController::class, 'removeProductInCart'])->name('cart.remove.product');
 
 require __DIR__.'/auth.php';
