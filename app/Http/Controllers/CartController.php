@@ -59,7 +59,7 @@ class CartController extends Controller
 
         Session::put('cart', $cart);
 
-        return Redirect::back()->with('message', 'Product successfully added');
+        return Redirect::back();
     }
 
     public function removeProductInCart(Request $request): RedirectResponse

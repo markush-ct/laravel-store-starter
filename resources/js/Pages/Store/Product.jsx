@@ -17,11 +17,17 @@ const Product = ({ product, categories, totalincart, breadcrumbs }) => {
 
     const [totalPrice, setTotalPrice] = useState(firstProductVariationPrice)
     const [selectedVariation, setSelectedVariation] = useState(firstProductVariationId)
+    const [addedToCart, setAddedToCart] = useState(false)
 
-    const handleAddToCartProduct = () => {
+    const handleAddToCartProduct = (e) => {
+        e.preventDefault()
+
         router.post(route('cart.store.product'), {
             variation_id: selectedVariation
-        }, {preserveScroll: true})
+        }, {
+            preserveScroll: true,
+            onSuccess: setAddedToCart(true)
+        })
     }
 
     return (
@@ -105,13 +111,23 @@ const Product = ({ product, categories, totalincart, breadcrumbs }) => {
                             </div>
 
                             <div className="py-10 text-right">
-                                <button
-                                    type="button"
-                                    className="uppercase py-5 px-16 bg-green-600 text-white font-medium hover:bg-opacity-80 transition ease-in-out duration-300"
-                                    onClick={handleAddToCartProduct}
-                                >
-                                    Add to cart
-                                </button>
+                                {!addedToCart ?
+                                    <Link
+                                        href="#"
+                                        className="uppercase py-5 px-16 bg-green-600 text-white font-medium hover:bg-opacity-80 transition ease-in-out duration-300"
+                                        onClick={handleAddToCartProduct}
+                                        preserveState
+                                        preserveScroll
+                                    >
+                                        Add to cart
+                                    </Link> :
+                                    <Link
+                                        href={route('cart.index')}
+                                        className="uppercase py-5 px-16 bg-orange-600 text-white font-medium hover:bg-opacity-80 transition ease-in-out duration-300"
+                                    >
+                                        Checkout
+                                    </Link>
+                                }
                             </div>
                         </div>
                     </div>
