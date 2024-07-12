@@ -21,6 +21,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@paypal/react-paypal-js": "^8.5.0",
         "clsx": "^2.1.1",
         "embla-carousel-react": "^8.1.6",
         "react-icons": "^5.2.1",
