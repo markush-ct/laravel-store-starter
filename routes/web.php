@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\MainStoreController;
+use App\Http\Controllers\PaypalPaymentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -34,5 +35,8 @@ Route::get('/store/product/{product:slug}', [MainStoreController::class, 'showPr
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart', [CartController::class, 'addToCartProduct'])->name('cart.store.product');
 Route::post('/cart/remove', [CartController::class, 'removeProductInCart'])->name('cart.remove.product');
+
+Route::get('/cart/checkout', [PaypalPaymentController::class, 'createOrder'])->name('paypal.create.order');
+Route::post('/cart/checkout/complete', [PaypalPaymentController::class, 'complete'])->name('paypal.complete.order');
 
 require __DIR__.'/auth.php';

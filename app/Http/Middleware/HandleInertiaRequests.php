@@ -19,7 +19,7 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      */
-    public function version(Request $request): string|null
+    public function version(Request $request): ?string
     {
         return parent::version($request);
     }
@@ -42,6 +42,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'totalincart' => count(Session::get('cart', [])),
             'flash' => Session::get('message'),
+            'paypalclientid' => config('paypal.client_id'),
         ];
     }
 }
