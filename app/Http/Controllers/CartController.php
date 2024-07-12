@@ -18,8 +18,8 @@ class CartController extends Controller
         $variationIds = [...Session::get('cart', [])];
         $variations = CartListResource::collection(
             Variation::with(['product.images' => function ($query) {
-                    $query->orderBy('order', 'asc');
-                }])
+                $query->orderBy('order', 'asc');
+            }])
                 ->whereIn('id', $variationIds)
                 ->paginate(10)
         );
@@ -28,6 +28,7 @@ class CartController extends Controller
         );
 
         return Inertia::render('Store/Cart', [
+            'csrf' => csrf_token(),
             'cart' => $variations,
             'carttotalprice' => $cartTotalPrice,
             'breadcrumbs' => [

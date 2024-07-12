@@ -37,6 +37,6 @@ Route::post('/cart', [CartController::class, 'addToCartProduct'])->name('cart.st
 Route::post('/cart/remove', [CartController::class, 'removeProductInCart'])->name('cart.remove.product');
 
 Route::get('/cart/checkout', [PaypalPaymentController::class, 'createOrder'])->name('paypal.create.order');
-Route::post('/cart/checkout/complete', [PaypalPaymentController::class, 'complete'])->name('paypal.complete.order');
+Route::post('/cart/checkout/complete', [PaypalPaymentController::class, 'completeOrder'])->name('paypal.complete.order');
 
 require __DIR__.'/auth.php';

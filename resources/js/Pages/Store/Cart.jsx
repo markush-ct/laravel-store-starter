@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MainLayout from "@/Layouts/MainLayout";
 import Container from "@/Components/Container";
 import { Link, router } from "@inertiajs/react";
@@ -6,8 +6,9 @@ import Breadcrumbs from "@/Components/Store/Breadcrumbs";
 import AlertMessage from "@/Components/Store/AlertMessage";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 
-const Cart = ({ totalincart, cart, carttotalprice, breadcrumbs, flash, paypalclientid }) => {
-    console.log(paypalclientid);
+const Cart = ({ csrf, totalincart, cart, carttotalprice, breadcrumbs, flash, paypalclientid }) => {
+    const [orderCompleted, setOrderCompleted] = useState(false);
+
     const paypalInitialOptions = {
         "client-id": paypalclientid,
         components: "buttons",
@@ -33,6 +34,21 @@ const Cart = ({ totalincart, cart, carttotalprice, breadcrumbs, flash, paypalcli
             })
     }
 
+    const handleCompleteOrder = () => {
+        return fetch(route('paypal.complete.order'), {
+                method: 'post',
+                headers: {"X-CSRF-Token": csrf}
+            })
+            .then((res) => res.json())
+            .then((order_details) => {
+                console.log(order_details);
+                setOrderCompleted(true);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
     return (
         <MainLayout totalincart={totalincart}>
             <div className="flex justify-center">
@@ -51,6 +67,17 @@ const Cart = ({ totalincart, cart, carttotalprice, breadcrumbs, flash, paypalcli
                         <AlertMessage
                             type={flash && flash.success ? "success" : "danger"}
                             message={flash}
+                        />
+                    </Container>
+                </div>
+            )}
+
+            {orderCompleted && (
+                <div className="flex justify-center">
+                    <Container>
+                        <AlertMessage
+                            type='success'
+                            message='Transaction completed!'
                         />
                     </Container>
                 </div>
@@ -171,8 +198,7 @@ const Cart = ({ totalincart, cart, carttotalprice, breadcrumbs, flash, paypalcli
                                     label: "checkout",
                                 }}
                                 createOrder={handleCreateOrder}
-                                onApprove={() => console.log('paypal approved')}
-                                onCancel={() => console.log('paypal cancelled')}
+                                onApprove={handleCompleteOrder}
                                 className="w-[300px]"
                             />
                         </PayPalScriptProvider>

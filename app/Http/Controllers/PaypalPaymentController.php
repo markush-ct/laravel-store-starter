@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Variation;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
@@ -24,9 +25,10 @@ class PaypalPaymentController extends Controller
 
     public function createOrder()
     {
+        $variationIds = [...Session::get('cart', [])];
         $accessToken = $this->getAccessToken();
         $generatedId = uuid_create();
-        $amount = 1;
+        $amount = Variation::whereIn('id', $variationIds)->get()->sum('price');
         $body = [
             'intent' => 'CAPTURE',
             'purchase_units' => [
@@ -55,6 +57,16 @@ class PaypalPaymentController extends Controller
 
     public function completeOrder()
     {
-        return 'Payment successfull!';
+        $accessToken = $this->getAccessToken();
+        $url = config('paypal.url').'/v2/checkout/orders/'.Session::get('order_id').'/capture';
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer '.$accessToken,
+        ];
+
+        $response = Http::withHeaders($headers)
+            ->post($url, null);
+
+        return json_decode($response->body());
     }
 }

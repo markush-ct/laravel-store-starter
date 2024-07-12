@@ -8,7 +8,7 @@ const AlertMessage = ({message="Default alert message.", type}) => {
 
     return (
         <div className={style}>
-            {message.success ?? message.error}
+            {message.success ?? message.error ?? message}
         </div>
     )
 }
