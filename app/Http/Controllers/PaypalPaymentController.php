@@ -26,17 +26,29 @@ class PaypalPaymentController extends Controller
     public function createOrder()
     {
         $variationIds = [...Session::get('cart', [])];
+        $variations = Variation::with(['product.images' => function ($query) {
+            $query->orderBy('order', 'asc');
+        }])
+            ->whereIn('id', $variationIds)
+            ->get();
+        $amount = Variation::whereIn('id', $variationIds)->get()->sum('price');
         $accessToken = $this->getAccessToken();
         $generatedId = uuid_create();
-        $amount = Variation::whereIn('id', $variationIds)->get()->sum('price');
         $body = [
             'intent' => 'CAPTURE',
             'purchase_units' => [
                 [
                     'reference_id' => $generatedId,
+                    'items' => $this->generateItemsListForOrder($variations),
                     'amount' => [
                         'currency_code' => 'USD',
-                        'value' => number_format($amount, 2),
+                        'value' => $amount,
+                        'breakdown' => [
+                            'item_total' => [
+                                'currency_code' => 'USD',
+                                'value' => $amount,
+                            ],
+                        ],
                     ],
                 ],
             ],
@@ -68,5 +80,23 @@ class PaypalPaymentController extends Controller
             ->post($url, null);
 
         return json_decode($response->body());
+    }
+
+    private function generateItemsListForOrder($array): array
+    {
+        $list = [];
+
+        foreach ($array as $item) {
+            array_push($list, [
+                'name' => $item->product->name,
+                'quantity' => 1,
+                'unit_amount' => [
+                    'currency_code' => 'USD',
+                    'value' => $item->price,
+                ],
+            ]);
+        }
+
+        return $list;
     }
 }
